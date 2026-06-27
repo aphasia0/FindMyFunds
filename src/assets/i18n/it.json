@@ -1,0 +1,108 @@
+{
+  "app": { "name": "FindMyFunds" },
+  "nav": {
+    "dashboard": "Dashboard",
+    "entry": "Inserimento",
+    "accounts": "Conti",
+    "settings": "Impostazioni"
+  },
+  "auth": {
+    "login": {
+      "title": "Accedi",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Accedi",
+      "no_account": "Non hai un account?",
+      "register_link": "Registrati"
+    },
+    "register": {
+      "title": "Registrati",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Crea account",
+      "has_account": "Hai già un account?",
+      "login_link": "Accedi",
+      "success_message": "Registrazione completata! Controlla la tua email."
+    },
+    "onboarding": {
+      "title": "Benvenuto in FindMyFunds!",
+      "subtitle": "Scegli il giorno del mese in cui vuoi fare il riepilogo mensile.",
+      "day_label": "Giorno del mese",
+      "submit": "Inizia"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "net_worth": "Patrimonio netto",
+    "delta_label": "Variazione",
+    "saving_rate": "Tasso di risparmio",
+    "na": "N/D",
+    "no_data_title": "Nessun dato per questo mese",
+    "no_data_cta": "Inserisci i dati del mese",
+    "composition": "Composizione del patrimonio",
+    "months": ["Gen", "Feb", "Mar", "Apr", "Mag", "Giu", "Lug", "Ago", "Set", "Ott", "Nov", "Dic"],
+    "today": "Oggi"
+  },
+  "entry": {
+    "title": "Inserimento mensile",
+    "month": "Mese",
+    "snapshot_date": "Data snapshot",
+    "accounts_section": "Conti",
+    "income_section": "Entrate del mese",
+    "add_income": "Aggiungi entrata",
+    "description": "Descrizione",
+    "amount": "Importo (€)",
+    "save": "Salva",
+    "saving": "Salvataggio...",
+    "saved": "Dati salvati!",
+    "remove": "Rimuovi",
+    "no_accounts": "Nessun conto attivo. Aggiungine uno nella sezione Conti."
+  },
+  "accounts": {
+    "title": "Gestione Conti",
+    "add": "Aggiungi conto",
+    "edit": "Modifica",
+    "archive": "Archivia",
+    "reactivate": "Riattiva",
+    "archived_section": "Conti archiviati",
+    "no_accounts": "Nessun conto attivo. Aggiungine uno!",
+    "form": {
+      "name": "Nome conto",
+      "name_placeholder": "Es. Conto BancaIntesa",
+      "type": "Tipo",
+      "asset_description": "Descrizione asset",
+      "asset_placeholder": "Es. Bitcoin, Oro",
+      "save": "Salva",
+      "cancel": "Annulla",
+      "add_title": "Nuovo conto",
+      "edit_title": "Modifica conto"
+    },
+    "types": {
+      "cash": "Liquidità",
+      "bond": "Obbligazioni",
+      "etf": "ETF",
+      "stock": "Azioni",
+      "asset": "Asset"
+    }
+  },
+  "settings": {
+    "title": "Impostazioni",
+    "preferred_day": "Giorno di inserimento mensile",
+    "preferred_day_hint": "Il giorno del mese in cui fai il riepilogo (1–28)",
+    "language": "Lingua",
+    "lang_it": "Italiano",
+    "lang_en": "English",
+    "email": "Email",
+    "logout": "Esci",
+    "save": "Salva",
+    "saving": "Salvataggio...",
+    "saved": "Impostazioni salvate!"
+  },
+  "errors": {
+    "generic": "Si è verificato un errore. Riprova.",
+    "required": "Campo obbligatorio",
+    "invalid_email": "Email non valida",
+    "min_password": "Minimo 6 caratteri",
+    "positive_amount": "Importo deve essere positivo"
+  }
+}

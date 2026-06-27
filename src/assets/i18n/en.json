@@ -1,0 +1,108 @@
+{
+  "app": { "name": "FindMyFunds" },
+  "nav": {
+    "dashboard": "Dashboard",
+    "entry": "Monthly Entry",
+    "accounts": "Accounts",
+    "settings": "Settings"
+  },
+  "auth": {
+    "login": {
+      "title": "Sign In",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign In",
+      "no_account": "Don't have an account?",
+      "register_link": "Register"
+    },
+    "register": {
+      "title": "Register",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Create account",
+      "has_account": "Already have an account?",
+      "login_link": "Sign In",
+      "success_message": "Registration complete! Please check your email."
+    },
+    "onboarding": {
+      "title": "Welcome to FindMyFunds!",
+      "subtitle": "Choose the day of the month you want to record your monthly snapshot.",
+      "day_label": "Day of the month",
+      "submit": "Get started"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "net_worth": "Net worth",
+    "delta_label": "Change",
+    "saving_rate": "Saving rate",
+    "na": "N/A",
+    "no_data_title": "No data for this month",
+    "no_data_cta": "Enter this month's data",
+    "composition": "Portfolio composition",
+    "months": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "today": "Today"
+  },
+  "entry": {
+    "title": "Monthly Entry",
+    "month": "Month",
+    "snapshot_date": "Snapshot date",
+    "accounts_section": "Accounts",
+    "income_section": "Income this month",
+    "add_income": "Add income",
+    "description": "Description",
+    "amount": "Amount (€)",
+    "save": "Save",
+    "saving": "Saving...",
+    "saved": "Data saved!",
+    "remove": "Remove",
+    "no_accounts": "No active accounts. Add one in the Accounts section."
+  },
+  "accounts": {
+    "title": "Manage Accounts",
+    "add": "Add account",
+    "edit": "Edit",
+    "archive": "Archive",
+    "reactivate": "Reactivate",
+    "archived_section": "Archived accounts",
+    "no_accounts": "No active accounts. Add one!",
+    "form": {
+      "name": "Account name",
+      "name_placeholder": "E.g. Savings account",
+      "type": "Type",
+      "asset_description": "Asset description",
+      "asset_placeholder": "E.g. Bitcoin, Gold",
+      "save": "Save",
+      "cancel": "Cancel",
+      "add_title": "New account",
+      "edit_title": "Edit account"
+    },
+    "types": {
+      "cash": "Cash",
+      "bond": "Bond",
+      "etf": "ETF",
+      "stock": "Stock",
+      "asset": "Asset"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "preferred_day": "Monthly snapshot day",
+    "preferred_day_hint": "The day of the month you record your snapshot (1–28)",
+    "language": "Language",
+    "lang_it": "Italiano",
+    "lang_en": "English",
+    "email": "Email",
+    "logout": "Sign out",
+    "save": "Save",
+    "saving": "Saving...",
+    "saved": "Settings saved!"
+  },
+  "errors": {
+    "generic": "An error occurred. Please try again.",
+    "required": "Required field",
+    "invalid_email": "Invalid email",
+    "min_password": "Minimum 6 characters",
+    "positive_amount": "Amount must be positive"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx @angular/cli@17 new findmyfunds --routing --style=scss --standalone --skip-git --directory .)",
+      "Bash(npm install *)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('exports',{}\\), indent=2\\)\\)\")",
+      "Bash(npm view *)",
+      "Bash(python3 -c \"import json,sys; versions=[v for v in json.load\\(sys.stdin\\) if not v.startswith\\('18.'\\)]; print\\('\\\\n'.join\\(versions[-5:]\\)\\)\")"
+    ]
+  }
+}
