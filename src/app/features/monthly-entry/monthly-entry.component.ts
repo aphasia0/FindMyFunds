@@ -43,7 +43,12 @@ interface AccountRow {
       <p class="text-muted">{{ 'entry.no_accounts' | translate }}</p>
     } @else {
       <div class="fmf-card mb-3">
-        <h3 class="section-title">{{ 'entry.accounts_section' | translate }}</h3>
+        <div class="section-header">
+          <h3 class="section-title">{{ 'entry.accounts_section' | translate }}</h3>
+          <p-button icon="pi pi-copy" [label]="'entry.copy_prev' | translate"
+                    severity="secondary" size="small" [loading]="copying"
+                    (onClick)="copyFromPreviousMonth()" />
+        </div>
         @for (row of accountRows; track row.account.id) {
           <div class="account-entry-row">
             <div class="account-entry-label">
@@ -87,6 +92,8 @@ interface AccountRow {
   styles: [`
     .entry-header { display: flex; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap; }
     .snapshot-date { display: flex; gap: 0.5rem; align-items: center; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .section-header .section-title { margin-bottom: 0; }
     .section-title { font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 1rem; }
     .account-entry-row { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #f0fdf4; flex-wrap: wrap; gap: 0.5rem; }
     .account-entry-label { display: flex; flex-direction: column; }
@@ -104,6 +111,7 @@ export class MonthlyEntryComponent implements OnInit {
   incomeRows: IncomeFormData[] = [];
   noAccounts = false;
   saving = false;
+  copying = false;
   savedMsg = false;
   snapshotDate = '';
   preferredDay = 27;
@@ -150,6 +158,23 @@ export class MonthlyEntryComponent implements OnInit {
 
     const income = await this.entryService.getIncomeForMonth(this.year, this.month);
     this.incomeRows = income.map(i => ({ amount: Number(i.amount), description: i.description }));
+  }
+
+  async copyFromPreviousMonth() {
+    this.copying = true;
+    try {
+      const prev = new Date(this.year, this.month - 2, 1);
+      const prevSnapshots = await this.entryService.getSnapshotsForMonth(
+        prev.getFullYear(), prev.getMonth() + 1
+      );
+      if (prevSnapshots.length === 0) return;
+      this.accountRows = this.accountRows.map(row => {
+        const snap = prevSnapshots.find(s => s.account_id === row.account.id);
+        return { account: row.account, value: snap ? Number(snap.value) : row.value };
+      });
+    } finally {
+      this.copying = false;
+    }
   }
 
   addIncome() {

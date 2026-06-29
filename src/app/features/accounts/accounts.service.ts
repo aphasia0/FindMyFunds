@@ -50,6 +50,30 @@ export class AccountsService {
     if (error) throw error;
   }
 
+  async getLatestBalances(): Promise<Map<string, number>> {
+    const { data, error } = await this.supabase
+      .from('monthly_snapshots')
+      .select('account_id, value, year, month')
+      .eq('user_id', this.auth.userId)
+      .order('year', { ascending: false })
+      .order('month', { ascending: false });
+    if (error) throw error;
+    const map = new Map<string, number>();
+    for (const row of (data ?? [])) {
+      if (!map.has(row.account_id)) map.set(row.account_id, Number(row.value));
+    }
+    return map;
+  }
+
+  async deleteAccount(id: string): Promise<void> {
+    const { error } = await this.supabase
+      .from('accounts')
+      .delete()
+      .eq('id', id)
+      .eq('user_id', this.auth.userId);
+    if (error) throw error;
+  }
+
   async setActive(id: string, isActive: boolean): Promise<void> {
     const { error } = await this.supabase
       .from('accounts')
