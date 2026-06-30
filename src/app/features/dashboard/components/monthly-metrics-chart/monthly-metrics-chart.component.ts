@@ -123,7 +123,7 @@ export class MonthlyMetricsChartComponent implements OnChanges {
 
   @HostListener('document:fullscreenchange')
   onFullscreenChange() {
-    this.isFullscreen = !!document.fullscreenElement;
+    this.isFullscreen = document.fullscreenElement === this.chartWrap.nativeElement;
   }
 
   ngOnChanges() {
