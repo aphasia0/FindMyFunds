@@ -11,6 +11,7 @@ import { MonthlyEntryService } from './monthly-entry.service';
 import { AccountsService } from '../accounts/accounts.service';
 import { ProfileService } from '../../core/profile.service';
 import { Account, IncomeFormData } from '../../core/models';
+import { DemoModeService } from '../../core/demo-mode.service';
 
 interface AccountRow {
   account: Account;
@@ -47,6 +48,7 @@ interface AccountRow {
           <h3 class="section-title">{{ 'entry.accounts_section' | translate }}</h3>
           <p-button icon="pi pi-copy" [label]="'entry.copy_prev' | translate"
                     severity="secondary" size="small" [loading]="copying"
+                    [disabled]="demoMode.isDemo"
                     (onClick)="copyFromPreviousMonth()" />
         </div>
         @for (row of accountRows; track row.account.id) {
@@ -86,7 +88,10 @@ interface AccountRow {
       }
 
       <p-button [label]="saving ? ('entry.saving' | translate) : ('entry.save' | translate)"
-                [loading]="saving" (onClick)="onSave()" styleClass="w-full" />
+                [loading]="saving" (onClick)="onSave()"
+                [disabled]="demoMode.isDemo"
+                [title]="demoMode.isDemo ? 'Non disponibile in modalità demo' : ''"
+                styleClass="w-full" />
     }
   `,
   styles: [`
@@ -106,6 +111,7 @@ export class MonthlyEntryComponent implements OnInit {
   private entryService = inject(MonthlyEntryService);
   private accountsService = inject(AccountsService);
   private profileService = inject(ProfileService);
+  demoMode = inject(DemoModeService);
 
   accountRows: AccountRow[] = [];
   incomeRows: IncomeFormData[] = [];
@@ -120,6 +126,12 @@ export class MonthlyEntryComponent implements OnInit {
   maxDate: Date = new Date();
 
   async ngOnInit() {
+    if (this.demoMode.isDemo) {
+      this.preferredDay = 27;
+      this.selectedDate = new Date(2026, 5, 1); // Giu 2026 — ultimo mese demo
+      await this.load();
+      return;
+    }
     const profile = await this.profileService.getProfile();
     this.preferredDay = profile.preferred_day;
     await this.load();
