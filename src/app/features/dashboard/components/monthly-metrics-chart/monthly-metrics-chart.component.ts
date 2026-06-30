@@ -114,10 +114,10 @@ export class MonthlyMetricsChartComponent implements OnChanges {
 
   toggleFullscreen() {
     const el = this.chartWrap.nativeElement;
-    if (!document.fullscreenElement) {
-      el.requestFullscreen().then(() => { this.isFullscreen = true; });
+    if (document.fullscreenElement !== el) {
+      el.requestFullscreen();
     } else {
-      document.exitFullscreen().then(() => { this.isFullscreen = false; });
+      document.exitFullscreen();
     }
   }
 
