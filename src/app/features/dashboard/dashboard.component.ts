@@ -5,7 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { DashboardService, MonthSummary, CompositionItem } from './dashboard.service';
 import { SummaryCardComponent } from './components/summary-card/summary-card.component';
-import { NetWorthChartComponent } from './components/net-worth-chart/net-worth-chart.component';
+import { PatrimonioChartComponent } from './components/patrimonio-chart/patrimonio-chart.component';
+import { MonthlyMetricsChartComponent } from './components/monthly-metrics-chart/monthly-metrics-chart.component';
 import { CompositionBarComponent } from './components/composition-bar/composition-bar.component';
 
 const MONTH_LABELS = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
@@ -14,7 +15,8 @@ const MONTH_LABELS = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott
   selector: 'app-dashboard',
   standalone: true,
   imports: [RouterLink, TranslateModule, ButtonModule,
-            SummaryCardComponent, NetWorthChartComponent, CompositionBarComponent],
+            SummaryCardComponent, PatrimonioChartComponent,
+            MonthlyMetricsChartComponent, CompositionBarComponent],
   template: `
     <h1 class="page-title">{{ 'dashboard.title' | translate }}</h1>
 
@@ -42,7 +44,8 @@ const MONTH_LABELS = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott
     }
 
     @if (summaries.length > 0) {
-      <app-net-worth-chart [summaries]="summaries" />
+      <app-patrimonio-chart [summaries]="summaries" />
+      <app-monthly-metrics-chart [summaries]="summaries" />
       <app-composition-bar [items]="composition" />
     }
   `,
