@@ -7,6 +7,7 @@ import { MonthSummary } from '../../dashboard.service';
 Chart.register(zoomPlugin);
 
 const MONTHS = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+const IS_TOUCH = typeof window !== 'undefined' && navigator.maxTouchPoints > 0;
 const DELTA_LINE         = '#f97316';
 const DELTA_DOT_POSITIVE = '#22c55e';
 const DELTA_DOT_NEGATIVE = '#ef4444';
@@ -91,8 +92,8 @@ export class MonthlyMetricsChartComponent implements OnChanges {
         },
       },
       zoom: {
-        pan: { enabled: true, mode: 'x' },
-        zoom: { wheel: { enabled: true }, pinch: { enabled: false }, mode: 'x' },
+        pan: { enabled: !IS_TOUCH, mode: 'x' },
+        zoom: { wheel: { enabled: !IS_TOUCH }, pinch: { enabled: false }, mode: 'x' },
       },
     } as any,
     scales: {

@@ -7,6 +7,7 @@ import { MonthSummary } from '../../dashboard.service';
 Chart.register(zoomPlugin);
 
 const MONTHS = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
+const IS_TOUCH = typeof window !== 'undefined' && navigator.maxTouchPoints > 0;
 const PATRIMONIO_COLOR = '#4ade80';
 const PATRIMONIO_LAST  = '#16a34a';
 
@@ -78,8 +79,8 @@ export class PatrimonioChartComponent implements OnChanges {
         },
       },
       zoom: {
-        pan: { enabled: true, mode: 'x' },
-        zoom: { wheel: { enabled: true }, pinch: { enabled: false }, mode: 'x' },
+        pan: { enabled: !IS_TOUCH, mode: 'x' },
+        zoom: { wheel: { enabled: !IS_TOUCH }, pinch: { enabled: false }, mode: 'x' },
       },
     } as any,
     scales: {
