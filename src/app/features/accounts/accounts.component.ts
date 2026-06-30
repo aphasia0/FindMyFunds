@@ -6,6 +6,7 @@ import { DialogModule } from 'primeng/dialog';
 import { AccountsService } from './accounts.service';
 import { AccountFormComponent } from './account-form/account-form.component';
 import { Account, AccountFormData } from '../../core/models';
+import { DemoModeService } from '../../core/demo-mode.service';
 
 @Component({
   selector: 'app-accounts',
@@ -14,10 +15,12 @@ import { Account, AccountFormData } from '../../core/models';
   template: `
     <h1 class="page-title">{{ 'accounts.title' | translate }}</h1>
 
-    <div class="add-row">
-      <p-button icon="pi pi-plus" [label]="'accounts.add' | translate"
-                (onClick)="openForm(null)" />
-    </div>
+    @if (!demoMode.isDemo) {
+      <div class="add-row">
+        <p-button icon="pi pi-plus" [label]="'accounts.add' | translate"
+                  (onClick)="openForm(null)" />
+      </div>
+    }
 
     @if (activeAccounts.length === 0) {
       <p class="text-muted">{{ 'accounts.no_accounts' | translate }}</p>
@@ -37,12 +40,14 @@ import { Account, AccountFormData } from '../../core/models';
         <span class="account-balance" [class.negative]="(latestBalances.get(account.id) ?? 0) < 0">
           {{ formatBalance(latestBalances.get(account.id)) }}
         </span>
-        <div class="account-actions">
-          <p-button icon="pi pi-pencil" [label]="'accounts.edit' | translate"
-                    severity="secondary" size="small" (onClick)="openForm(account)" />
-          <p-button icon="pi pi-inbox" [label]="'accounts.archive' | translate"
-                    severity="secondary" size="small" (onClick)="openArchiveConfirm(account.id)" />
-        </div>
+        @if (!demoMode.isDemo) {
+          <div class="account-actions">
+            <p-button icon="pi pi-pencil" [label]="'accounts.edit' | translate"
+                      severity="secondary" size="small" (onClick)="openForm(account)" />
+            <p-button icon="pi pi-inbox" [label]="'accounts.archive' | translate"
+                      severity="secondary" size="small" (onClick)="openArchiveConfirm(account.id)" />
+          </div>
+        }
       </div>
     }
 
@@ -51,12 +56,14 @@ import { Account, AccountFormData } from '../../core/models';
       @for (account of archivedAccounts; track account.id) {
         <div class="fmf-card account-row archived">
           <span class="account-name">{{ account.name }}</span>
-          <div class="account-actions">
-            <p-button icon="pi pi-refresh" [label]="'accounts.reactivate' | translate"
-                      severity="secondary" size="small" (onClick)="reactivate(account.id)" />
-            <p-button icon="pi pi-trash" [label]="'accounts.delete' | translate"
-                      severity="danger" size="small" (onClick)="openDeleteConfirm(account.id)" />
-          </div>
+          @if (!demoMode.isDemo) {
+            <div class="account-actions">
+              <p-button icon="pi pi-refresh" [label]="'accounts.reactivate' | translate"
+                        severity="secondary" size="small" (onClick)="reactivate(account.id)" />
+              <p-button icon="pi pi-trash" [label]="'accounts.delete' | translate"
+                        severity="danger" size="small" (onClick)="openDeleteConfirm(account.id)" />
+            </div>
+          }
         </div>
       }
     }
@@ -115,6 +122,7 @@ import { Account, AccountFormData } from '../../core/models';
 })
 export class AccountsComponent implements OnInit {
   private service = inject(AccountsService);
+  demoMode = inject(DemoModeService);
 
   activeAccounts: Account[] = [];
   archivedAccounts: Account[] = [];

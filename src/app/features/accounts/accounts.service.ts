@@ -3,13 +3,18 @@ import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from '../../core/supabase.service';
 import { AuthService } from '../../core/auth.service';
 import { Account, AccountFormData } from '../../core/models';
+import { DemoModeService } from '../../core/demo-mode.service';
+import { DEMO_ACCOUNTS, DEMO_SNAPSHOTS } from '../../core/demo-data';
 
 @Injectable({ providedIn: 'root' })
 export class AccountsService {
   private supabase = inject(SupabaseService).client;
   private auth = inject(AuthService);
+  private demoMode = inject(DemoModeService);
 
   async getActiveAccounts(): Promise<Account[]> {
+    if (this.demoMode.isDemo) return DEMO_ACCOUNTS.filter(a => a.is_active);
+
     const { data, error } = await this.supabase
       .from('accounts')
       .select('*')
@@ -21,6 +26,8 @@ export class AccountsService {
   }
 
   async getAllAccounts(): Promise<Account[]> {
+    if (this.demoMode.isDemo) return [...DEMO_ACCOUNTS];
+
     const { data, error } = await this.supabase
       .from('accounts')
       .select('*')
@@ -32,6 +39,8 @@ export class AccountsService {
   }
 
   async createAccount(dto: AccountFormData): Promise<Account> {
+    if (this.demoMode.isDemo) return DEMO_ACCOUNTS[0];
+
     const { data, error } = await this.supabase
       .from('accounts')
       .insert({ ...dto, user_id: this.auth.userId })
@@ -42,6 +51,8 @@ export class AccountsService {
   }
 
   async updateAccount(id: string, dto: AccountFormData): Promise<void> {
+    if (this.demoMode.isDemo) return;
+
     const { error } = await this.supabase
       .from('accounts')
       .update({ name: dto.name, type: dto.type, asset_description: dto.asset_description })
@@ -51,6 +62,14 @@ export class AccountsService {
   }
 
   async getLatestBalances(): Promise<Map<string, number>> {
+    if (this.demoMode.isDemo) {
+      const map = new Map<string, number>();
+      for (const snap of [...DEMO_SNAPSHOTS].reverse()) {
+        map.set(snap.account_id, snap.value);
+      }
+      return map;
+    }
+
     const { data, error } = await this.supabase
       .from('monthly_snapshots')
       .select('account_id, value, year, month')
@@ -66,6 +85,8 @@ export class AccountsService {
   }
 
   async deleteAccount(id: string): Promise<void> {
+    if (this.demoMode.isDemo) return;
+
     const { error } = await this.supabase
       .from('accounts')
       .delete()
@@ -75,6 +96,8 @@ export class AccountsService {
   }
 
   async setActive(id: string, isActive: boolean): Promise<void> {
+    if (this.demoMode.isDemo) return;
+
     const { error } = await this.supabase
       .from('accounts')
       .update({ is_active: isActive })
