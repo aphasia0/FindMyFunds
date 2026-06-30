@@ -56,9 +56,9 @@ const INCOME_LINE        = '#3b82f6';
     .fs-btn {
       display: flex; align-items: center; justify-content: center;
       width: 2rem; height: 2rem; border-radius: 6px;
-      border: 1px solid #d1fae5; background: #f0fdf4; color: #15803d; cursor: pointer;
+      border: 1px solid #e0e7ff; background: #eef2ff; color: #4f46e5; cursor: pointer;
     }
-    .fs-btn:hover { background: #dcfce7; }
+    .fs-btn:hover { background: #c7d2fe; }
   `],
 })
 export class MonthlyMetricsChartComponent implements OnChanges {
@@ -77,7 +77,17 @@ export class MonthlyMetricsChartComponent implements OnChanges {
       legend: {
         display: true,
         position: 'top',
-        labels: { usePointStyle: true, pointStyleWidth: 10, boxHeight: 8 },
+        labels: {
+          usePointStyle: true,
+          pointStyleWidth: 10,
+          boxHeight: 8,
+          generateLabels: (chart: any) => {
+            const labels = Chart.defaults.plugins.legend.labels.generateLabels!(chart);
+            const delta = labels.find((l: any) => l.datasetIndex === 0);
+            if (delta) { delta.fillStyle = DELTA_LINE; delta.strokeStyle = DELTA_LINE; }
+            return labels;
+          },
+        },
       },
       tooltip: {
         callbacks: {

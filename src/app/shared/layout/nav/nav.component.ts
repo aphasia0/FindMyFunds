@@ -52,7 +52,7 @@ interface NavItem {
     .brand-mark {
       width: 30px;
       height: 30px;
-      background: #22c55e;
+      background: #6366f1;
       border-radius: 8px;
       color: #ffffff;
       font-weight: 800;
@@ -66,7 +66,7 @@ interface NavItem {
     .brand-name {
       font-size: 1rem;
       font-weight: 700;
-      color: #15803d;
+      color: #4338ca;
       letter-spacing: -0.01em;
     }
 
@@ -81,12 +81,12 @@ interface NavItem {
       font-size: 0.95rem;
       transition: background 0.15s, box-shadow 0.15s;
 
-      &:hover { background: #dcfce7; }
+      &:hover { background: #e0e7ff; }
       &.active {
-        background: #f0fdf4;
-        color: #15803d;
+        background: #eef2ff;
+        color: #4338ca;
         font-weight: 600;
-        box-shadow: inset 3px 0 0 #22c55e;
+        box-shadow: inset 3px 0 0 #6366f1;
       }
     }
 
@@ -104,7 +104,7 @@ interface NavItem {
       &.active {
         background: transparent;
         box-shadow: none;
-        color: #15803d;
+        color: #4338ca;
         font-weight: 600;
       }
       &.active::after {
@@ -115,7 +115,7 @@ interface NavItem {
         transform: translateX(-50%);
         width: 5px;
         height: 5px;
-        background: #22c55e;
+        background: #6366f1;
         border-radius: 50%;
       }
     }
@@ -126,7 +126,7 @@ interface NavItem {
     .demo-badge {
       font-size: 0.6rem;
       font-weight: 700;
-      background: #22c55e;
+      background: #6366f1;
       color: white;
       padding: 0.15rem 0.4rem;
       border-radius: 4px;

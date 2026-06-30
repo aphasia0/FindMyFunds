@@ -6,8 +6,8 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  background-color: #f0fdf4;
-  color: #1a2e1a;
+  background-color: #eef2ff;
+  color: #1e1b4b;
   height: 100%;
   -webkit-font-smoothing: antialiased;
 }
@@ -51,7 +51,7 @@ html, body {
     flex-direction: column;
     width: 220px;
     background: #ffffff;
-    border-right: 1px solid #d1fae5;
+    border-right: 1px solid #e0e7ff;
     padding: 1.5rem 1rem;
     gap: 0.25rem;
   }
@@ -65,7 +65,7 @@ html, body {
   left: 0;
   right: 0;
   background: #ffffff;
-  border-top: 1px solid #d1fae5;
+  border-top: 1px solid #e0e7ff;
   z-index: 100;
 
   @media (min-width: 768px) {
@@ -90,7 +90,7 @@ html, body {
 .page-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #15803d;
+  color: #4338ca;
   margin: 0 0 1.25rem;
   letter-spacing: -0.01em;
 }

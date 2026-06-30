@@ -15,7 +15,12 @@ import { DemoModeService } from '../../core/demo-mode.service';
   template: `
     <h1 class="page-title">{{ 'accounts.title' | translate }}</h1>
 
-    @if (!demoMode.isDemo) {
+    @if (demoMode.isDemo) {
+      <div class="demo-notice">
+        <i class="pi pi-info-circle"></i>
+        <span>Sei in modalità demo — i conti non sono modificabili.</span>
+      </div>
+    } @else {
       <div class="add-row">
         <p-button icon="pi pi-plus" [label]="'accounts.add' | translate"
                   (onClick)="openForm(null)" />
@@ -99,6 +104,12 @@ import { DemoModeService } from '../../core/demo-mode.service';
   `,
   styles: [`
     .add-row { margin-bottom: 1rem; }
+    .demo-notice {
+      display: flex; align-items: center; gap: 0.6rem;
+      background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 0.75rem;
+      padding: 0.75rem 1rem; margin-bottom: 1rem;
+      color: #4338ca; font-size: 0.875rem;
+    }
     .account-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem; }
     .account-info { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
     .account-name { font-weight: 500; }
