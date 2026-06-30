@@ -66,7 +66,7 @@ import { MonthSummary } from '../../dashboard.service';
       from { opacity: 0; transform: translateY(6px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .divider { height: 1px; background: #f0fdf4; margin: 1rem 0; }
+    .divider { height: 1px; background: #eef2ff; margin: 1rem 0; }
     .metrics-row { display: flex; gap: 2rem; flex-wrap: wrap; }
     .metric { display: flex; flex-direction: column; gap: 0.4rem; }
     .pill {
@@ -80,7 +80,7 @@ import { MonthSummary } from '../../dashboard.service';
     .pill-positive { background: #dcfce7; color: #15803d; }
     .pill-negative { background: #fee2e2; color: #b91c1c; }
     .pill-neutral  { background: #f3f4f6; color: #6b7280; }
-    .pill-income   { background: #e0f2fe; color: #0369a1; }
+    .pill-income   { background: #dbeafe; color: #1d4ed8; }
   `],
 })
 export class SummaryCardComponent {

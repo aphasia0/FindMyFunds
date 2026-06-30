@@ -54,9 +54,9 @@ const PATRIMONIO_LAST  = '#4f46e5';
     .fs-btn {
       display: flex; align-items: center; justify-content: center;
       width: 2rem; height: 2rem; border-radius: 6px;
-      border: 1px solid #d1fae5; background: #f0fdf4; color: #15803d; cursor: pointer;
+      border: 1px solid #e0e7ff; background: #eef2ff; color: #4f46e5; cursor: pointer;
     }
-    .fs-btn:hover { background: #dcfce7; }
+    .fs-btn:hover { background: #c7d2fe; }
   `],
 })
 export class PatrimonioChartComponent implements OnChanges {

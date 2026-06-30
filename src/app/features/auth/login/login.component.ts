@@ -16,7 +16,11 @@ import { AuthService } from '../../../core/auth.service';
   template: `
     <div class="auth-page">
       <p-card>
-        <div class="auth-logo">FindMyFunds</div>
+        <div class="auth-logo">
+          <span class="logo-mark">€</span>
+          <span class="logo-text">FindMyFunds</span>
+        </div>
+        <p class="auth-tagline">Traccia il tuo patrimonio, mese per mese</p>
         <h2>{{ 'auth.login.title' | translate }}</h2>
 
         @if (errorMsg) {
@@ -50,24 +54,40 @@ import { AuthService } from '../../../core/auth.service';
     .auth-page {
       min-height: 100vh;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
-      background: #f0fdf4;
+      background: #eef2ff;
       padding: 1rem;
+      padding-top: clamp(3rem, 10vh, 6rem);
     }
     :host ::ng-deep .p-card { width: 100%; max-width: 400px; }
-    .auth-logo { font-size: 1.5rem; font-weight: 700; color: #15803d; text-align: center; margin-bottom: 0.5rem; }
-    h2 { text-align: center; color: #166534; margin-bottom: 1.5rem; }
+    :host ::ng-deep .p-inputtext { border-color: #c7d2fe !important; }
+    :host ::ng-deep .p-inputtext:focus { border-color: #6366f1 !important; }
+    .auth-logo {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.6rem; margin-bottom: 0.35rem;
+    }
+    .logo-mark {
+      width: 34px; height: 34px; background: #6366f1; border-radius: 9px;
+      color: #fff; font-weight: 800; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-text { font-size: 1.4rem; font-weight: 700; color: #4338ca; }
+    .auth-tagline {
+      text-align: center; color: #6b7280; font-size: 0.85rem;
+      margin: 0 0 1.25rem;
+    }
+    h2 { text-align: center; color: #3730a3; margin-bottom: 1.5rem; }
     .auth-form { display: flex; flex-direction: column; gap: 1rem; }
     .field { display: flex; flex-direction: column; gap: 0.25rem; }
     .auth-link { text-align: center; margin-top: 1rem; }
-    a { color: #16a34a; }
+    a { color: #4f46e5; }
     .demo-divider {
       display: flex; align-items: center; gap: 0.75rem;
       margin: 1rem 0 0.75rem; color: #9ca3af; font-size: 0.85rem;
     }
     .demo-divider::before, .demo-divider::after {
-      content: ''; flex: 1; height: 1px; background: #e5e7eb;
+      content: ''; flex: 1; height: 1px; background: #e0e7ff;
     }
   `],
 })

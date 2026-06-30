@@ -51,7 +51,7 @@ const MONTH_LABELS = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott
   `,
   styles: [`
     .cta-banner { display: flex; align-items: center; justify-content: space-between;
-                  flex-wrap: wrap; gap: 0.75rem; background: #dcfce7; border: 1px solid #86efac; }
+                  flex-wrap: wrap; gap: 0.75rem; background: #e0e7ff; border: 1px solid #a5b4fc; }
     .window-nav { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; padding: 0.5rem 0.75rem; }
     .window-label { font-weight: 500; flex: 1; text-align: center; }
   `],
