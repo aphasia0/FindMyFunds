@@ -8,8 +8,8 @@ Chart.register(zoomPlugin);
 
 const MONTHS = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
 const IS_TOUCH = typeof window !== 'undefined' && navigator.maxTouchPoints > 0;
-const PATRIMONIO_COLOR = '#4ade80';
-const PATRIMONIO_LAST  = '#16a34a';
+const PATRIMONIO_COLOR = '#818cf8';
+const PATRIMONIO_LAST  = '#4f46e5';
 
 @Component({
   selector: 'app-patrimonio-chart',
@@ -87,12 +87,12 @@ export class PatrimonioChartComponent implements OnChanges {
       x: { grid: { display: false }, ticks: { maxRotation: 45 } },
       y: {
         position: 'left',
-        title: { display: true, text: 'Patrimonio (€)', color: '#16a34a' },
+        title: { display: true, text: 'Patrimonio (€)', color: '#4f46e5' },
         ticks: {
-          color: '#16a34a',
+          color: '#4f46e5',
           callback: v => `€ ${(Number(v) / 1000).toFixed(0)}k`,
         },
-        grid: { color: '#f0fdf4' },
+        grid: { color: '#eef2ff' },
       },
     },
   };
