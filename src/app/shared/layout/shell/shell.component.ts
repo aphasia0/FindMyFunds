@@ -3,6 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { NavComponent } from '../nav/nav.component';
 import { ProfileService } from '../../../core/profile.service';
+import { DemoModeService } from '../../../core/demo-mode.service';
 
 @Component({
   selector: 'app-shell',
@@ -25,8 +26,10 @@ import { ProfileService } from '../../../core/profile.service';
 export class ShellComponent implements OnInit {
   private profileService = inject(ProfileService);
   private router = inject(Router);
+  private demoMode = inject(DemoModeService);
 
   async ngOnInit() {
+    if (this.demoMode.isDemo) return;
     try {
       const profile = await this.profileService.getProfile();
       if (!profile.onboarding_completed) {

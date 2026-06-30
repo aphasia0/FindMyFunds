@@ -1,7 +1,8 @@
 // src/app/shared/layout/nav/nav.component.ts
-import { Component, Input } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { DemoModeService } from '../../../core/demo-mode.service';
 
 interface NavItem {
   path: string;
@@ -21,10 +22,19 @@ interface NavItem {
         <span class="nav-label">{{ item.labelKey | translate }}</span>
       </a>
     }
+    @if (demoMode.isDemo) {
+      <button class="nav-item exit-demo-btn" (click)="demoMode.exit()">
+        <i class="pi pi-sign-out nav-icon"></i>
+        <span class="nav-label">Esci dalla demo</span>
+      </button>
+    }
     @if (mode === 'sidebar') {
       <div class="brand">
         <span class="brand-mark">€</span>
         <span class="brand-name">FindMyFunds</span>
+        @if (demoMode.isDemo) {
+          <span class="demo-badge">DEMO</span>
+        }
       </div>
     }
   `,
@@ -112,10 +122,37 @@ interface NavItem {
 
     .nav-icon { font-size: 1.25rem; }
     .bottom-item .nav-icon { font-size: 1.4rem; }
+
+    .demo-badge {
+      font-size: 0.6rem;
+      font-weight: 700;
+      background: #22c55e;
+      color: white;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .exit-demo-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.65rem 0.75rem;
+      border-radius: 0.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      color: #6b7280;
+      font-size: 0.95rem;
+      &:hover { background: #fee2e2; color: #b91c1c; }
+    }
   `],
 })
 export class NavComponent {
   @Input() mode: 'sidebar' | 'bottom' = 'sidebar';
+  demoMode = inject(DemoModeService);
 
   items: NavItem[] = [
     { path: '/dashboard', icon: 'pi pi-home',       labelKey: 'nav.dashboard' },
