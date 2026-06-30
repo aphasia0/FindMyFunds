@@ -1,6 +1,7 @@
 // src/app/features/settings/settings.component.ts
 import { Component, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
@@ -8,14 +9,28 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ProfileService } from '../../core/profile.service';
 import { AuthService } from '../../core/auth.service';
+import { DemoModeService } from '../../core/demo-mode.service';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [FormsModule, TranslateModule, ButtonModule, DropdownModule, InputTextModule, MessageModule],
+  imports: [FormsModule, RouterLink, TranslateModule, ButtonModule, DropdownModule, InputTextModule, MessageModule],
   template: `
     <h1 class="page-title">{{ 'settings.title' | translate }}</h1>
 
+    @if (demoMode.isDemo) {
+      <div class="fmf-card demo-notice">
+        <i class="pi pi-info-circle" style="font-size:1.5rem; color:#16a34a;"></i>
+        <div>
+          <p style="margin:0; font-weight:600; color:#166534;">Sei in modalità demo</p>
+          <p style="margin:0.25rem 0 0; color:#374151; font-size:0.9rem;">
+            Le impostazioni non sono disponibili nella demo.
+          </p>
+        </div>
+        <p-button label="Registrati gratis →" severity="secondary"
+                  size="small" routerLink="/auth/register" />
+      </div>
+    } @else {
     <div class="fmf-card settings-form">
       <div class="field">
         <label>{{ 'settings.email' | translate }}</label>
@@ -48,16 +63,22 @@ import { AuthService } from '../../core/auth.service';
                 icon="pi pi-sign-out" severity="secondary"
                 (onClick)="onLogout()" styleClass="w-full" />
     </div>
+    }
   `,
   styles: [`
     .settings-form { display: flex; flex-direction: column; gap: 1.25rem; max-width: 480px; }
     .field { display: flex; flex-direction: column; gap: 0.25rem; }
+    .demo-notice {
+      display: flex; align-items: center; gap: 1rem;
+      flex-wrap: wrap; background: #f0fdf4; border: 1px solid #86efac;
+    }
   `],
 })
 export class SettingsComponent implements OnInit {
   private profileService = inject(ProfileService);
   private auth = inject(AuthService);
   private translate = inject(TranslateService);
+  demoMode = inject(DemoModeService);
 
   email = this.auth.userEmail ?? '';
   preferredDay = 27;

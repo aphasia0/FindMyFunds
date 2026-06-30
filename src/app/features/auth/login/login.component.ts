@@ -40,6 +40,9 @@ import { AuthService } from '../../../core/auth.service';
           {{ 'auth.login.no_account' | translate }}
           <a routerLink="/auth/register">{{ 'auth.login.register_link' | translate }}</a>
         </p>
+        <div class="demo-divider"><span>oppure</span></div>
+        <p-button label="Prova la demo →" severity="secondary"
+                  styleClass="w-full" (onClick)="goToDemo()" />
       </p-card>
     </div>
   `,
@@ -59,6 +62,13 @@ import { AuthService } from '../../../core/auth.service';
     .field { display: flex; flex-direction: column; gap: 0.25rem; }
     .auth-link { text-align: center; margin-top: 1rem; }
     a { color: #16a34a; }
+    .demo-divider {
+      display: flex; align-items: center; gap: 0.75rem;
+      margin: 1rem 0 0.75rem; color: #9ca3af; font-size: 0.85rem;
+    }
+    .demo-divider::before, .demo-divider::after {
+      content: ''; flex: 1; height: 1px; background: #e5e7eb;
+    }
   `],
 })
 export class LoginComponent {
@@ -72,6 +82,10 @@ export class LoginComponent {
 
   loading = false;
   errorMsg = '';
+
+  goToDemo() {
+    this.router.navigate(['/demo']);
+  }
 
   async onSubmit() {
     if (this.form.invalid) return;
