@@ -1,11 +1,14 @@
-// src/app/core/auth.guard.ts
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { filter, map, take } from 'rxjs/operators';
 import { Session } from '@supabase/supabase-js';
 import { AuthService } from './auth.service';
+import { DemoModeService } from './demo-mode.service';
 
 export const authGuard: CanActivateFn = () => {
+  const demoMode = inject(DemoModeService);
+  if (demoMode.isDemo) return true;
+
   const auth = inject(AuthService);
   const router = inject(Router);
   return auth.session$.pipe(
