@@ -36,6 +36,7 @@
     "net_worth": "Patrimonio netto",
     "delta_label": "Variazione",
     "saving_rate": "Tasso di risparmio",
+    "income_label": "Entrate",
     "na": "N/D",
     "no_data_title": "Nessun dato per questo mese",
     "no_data_cta": "Inserisci i dati del mese",

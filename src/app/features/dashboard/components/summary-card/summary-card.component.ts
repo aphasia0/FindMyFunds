@@ -38,6 +38,14 @@ import { MonthSummary } from '../../dashboard.service';
               <span class="pill pill-neutral">{{ 'dashboard.na' | translate }}</span>
             }
           </div>
+          <div class="metric">
+            <p class="metric-label">{{ 'dashboard.income_label' | translate }}</p>
+            @if (summary.income > 0) {
+              <span class="pill pill-income">{{ formatIncome(summary.income) }}</span>
+            } @else {
+              <span class="pill pill-neutral">{{ 'dashboard.na' | translate }}</span>
+            }
+          </div>
         </div>
       </div>
     }
@@ -72,6 +80,7 @@ import { MonthSummary } from '../../dashboard.service';
     .pill-positive { background: #dcfce7; color: #15803d; }
     .pill-negative { background: #fee2e2; color: #b91c1c; }
     .pill-neutral  { background: #f3f4f6; color: #6b7280; }
+    .pill-income   { background: #e0f2fe; color: #0369a1; }
   `],
 })
 export class SummaryCardComponent {
@@ -88,5 +97,9 @@ export class SummaryCardComponent {
 
   formatSavingPct(pct: number): string {
     return pct.toLocaleString('it-IT', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%';
+  }
+
+  formatIncome(income: number): string {
+    return '€ ' + income.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 }

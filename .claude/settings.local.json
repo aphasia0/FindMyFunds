@@ -5,7 +5,9 @@
       "Bash(npm install *)",
       "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('exports',{}\\), indent=2\\)\\)\")",
       "Bash(npm view *)",
-      "Bash(python3 -c \"import json,sys; versions=[v for v in json.load\\(sys.stdin\\) if not v.startswith\\('18.'\\)]; print\\('\\\\n'.join\\(versions[-5:]\\)\\)\")"
+      "Bash(python3 -c \"import json,sys; versions=[v for v in json.load\\(sys.stdin\\) if not v.startswith\\('18.'\\)]; print\\('\\\\n'.join\\(versions[-5:]\\)\\)\")",
+      "Bash(git -C /Users/teammobile/FindMyFunds add src/app/core/demo-mode.service.ts src/app/core/demo-mode.service.spec.ts src/app/core/demo-data.ts)",
+      "Bash(git -C /Users/teammobile/FindMyFunds commit -m ' *)"
     ]
   }
 }

@@ -36,6 +36,7 @@
     "net_worth": "Net worth",
     "delta_label": "Change",
     "saving_rate": "Saving rate",
+    "income_label": "Income",
     "na": "N/A",
     "no_data_title": "No data for this month",
     "no_data_cta": "Enter this month's data",
