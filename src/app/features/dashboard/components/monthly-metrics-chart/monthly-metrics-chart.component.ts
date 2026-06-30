@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, ViewChild, ElementRef } from '@angular/core';
+import { Component, Input, OnChanges, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartData, Chart, TooltipItem } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
@@ -119,6 +119,11 @@ export class MonthlyMetricsChartComponent implements OnChanges {
     } else {
       document.exitFullscreen().then(() => { this.isFullscreen = false; });
     }
+  }
+
+  @HostListener('document:fullscreenchange')
+  onFullscreenChange() {
+    this.isFullscreen = !!document.fullscreenElement;
   }
 
   ngOnChanges() {
