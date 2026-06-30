@@ -3,6 +3,8 @@ import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from '../../core/supabase.service';
 import { AuthService } from '../../core/auth.service';
 import { MonthlySnapshot, IncomeTransaction, AccountType } from '../../core/models';
+import { DemoModeService } from '../../core/demo-mode.service';
+import { DEMO_SNAPSHOTS, DEMO_INCOME, DEMO_ACCOUNTS } from '../../core/demo-data';
 
 export interface MonthSummary {
   year: number;
@@ -22,6 +24,7 @@ export interface CompositionItem {
 export class DashboardService {
   private supabase = inject(SupabaseService).client;
   private auth = inject(AuthService);
+  private demoMode = inject(DemoModeService);
 
   buildSummaries(
     snapshots: MonthlySnapshot[],
@@ -61,6 +64,15 @@ export class DashboardService {
 
   /** Fetches all snapshots and income for this user (no date filter — data is small). */
   async loadAllData(): Promise<{ snapshots: any[]; income: IncomeTransaction[] }> {
+    if (this.demoMode.isDemo) {
+      const accountTypeMap = new Map(DEMO_ACCOUNTS.map(a => [a.id, a.type]));
+      const snapshots = DEMO_SNAPSHOTS.map(s => ({
+        ...s,
+        accounts: { type: accountTypeMap.get(s.account_id) ?? 'asset' },
+      }));
+      return { snapshots, income: DEMO_INCOME };
+    }
+
     const [snapshotsRes, incomeRes] = await Promise.all([
       this.supabase
         .from('monthly_snapshots')
