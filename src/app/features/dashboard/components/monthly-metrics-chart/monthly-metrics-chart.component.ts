@@ -92,7 +92,7 @@ export class MonthlyMetricsChartComponent implements OnChanges {
       },
       zoom: {
         pan: { enabled: true, mode: 'x' },
-        zoom: { wheel: { enabled: true }, pinch: { enabled: true }, mode: 'x' },
+        zoom: { wheel: { enabled: true }, pinch: { enabled: false }, mode: 'x' },
       },
     } as any,
     scales: {
