@@ -8,10 +8,10 @@ Chart.register(zoomPlugin);
 
 const MONTHS = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
 const IS_TOUCH = typeof window !== 'undefined' && navigator.maxTouchPoints > 0;
-const DELTA_LINE         = '#f97316';
+const DELTA_LINE         = '#6366f1';
 const DELTA_DOT_POSITIVE = '#22c55e';
 const DELTA_DOT_NEGATIVE = '#ef4444';
-const INCOME_LINE        = '#06b6d4';
+const INCOME_LINE        = '#3b82f6';
 
 @Component({
   selector: 'app-monthly-metrics-chart',
@@ -100,9 +100,9 @@ export class MonthlyMetricsChartComponent implements OnChanges {
       x: { grid: { display: false }, ticks: { maxRotation: 45 } },
       y: {
         position: 'right',
-        title: { display: true, text: 'Mensile (€)', color: '#f97316' },
+        title: { display: true, text: 'Mensile (€)', color: '#6366f1' },
         ticks: {
-          color: '#f97316',
+          color: '#6366f1',
           callback: v => {
             const n = Number(v);
             return (n >= 0 ? '+' : '') + `€ ${(n / 1000).toFixed(0)}k`;
