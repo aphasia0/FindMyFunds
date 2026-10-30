@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from '../../core/supabase.service';
 import { AuthService } from '../../core/auth.service';
-import { MonthlySnapshot, IncomeTransaction, AccountType } from '../../core/models';
+import { MonthlySnapshot, IncomeTransaction, AccountType, Account } from '../../core/models';
 import { DemoModeService } from '../../core/demo-mode.service';
 import { DEMO_SNAPSHOTS, DEMO_INCOME, DEMO_ACCOUNTS } from '../../core/demo-data';
 
@@ -72,17 +72,17 @@ export class DashboardService {
   }
 
   /** Fetches all snapshots and income for this user (no date filter — data is small). */
-  async loadAllData(): Promise<{ snapshots: any[]; income: IncomeTransaction[] }> {
+  async loadAllData(): Promise<{ snapshots: any[]; income: IncomeTransaction[]; accounts: Account[] }> {
     if (this.demoMode.isDemo) {
       const accountTypeMap = new Map(DEMO_ACCOUNTS.map(a => [a.id, a.type]));
       const snapshots = DEMO_SNAPSHOTS.map(s => ({
         ...s,
         accounts: { type: accountTypeMap.get(s.account_id) ?? 'asset' },
       }));
-      return { snapshots, income: DEMO_INCOME };
+      return { snapshots, income: DEMO_INCOME, accounts: DEMO_ACCOUNTS };
     }
 
-    const [snapshotsRes, incomeRes] = await Promise.all([
+    const [snapshotsRes, incomeRes, accountsRes] = await Promise.all([
       this.supabase
         .from('monthly_snapshots')
         .select('*, accounts(type)')
@@ -91,12 +91,20 @@ export class DashboardService {
         .from('income_transactions')
         .select('*')
         .eq('user_id', this.auth.userId),
+      this.supabase
+        .from('accounts')
+        .select('*')
+        .eq('user_id', this.auth.userId)
+        .eq('is_active', true)
+        .order('created_at'),
     ]);
     if (snapshotsRes.error) throw snapshotsRes.error;
     if (incomeRes.error) throw incomeRes.error;
+    if (accountsRes.error) throw accountsRes.error;
     return {
       snapshots: snapshotsRes.data ?? [],
       income: (incomeRes.data ?? []) as IncomeTransaction[],
+      accounts: (accountsRes.data ?? []) as Account[],
     };
   }
 
