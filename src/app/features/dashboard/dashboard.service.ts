@@ -1,4 +1,3 @@
-// src/app/features/dashboard/dashboard.service.ts
 import { Injectable, inject } from '@angular/core';
 import { SupabaseService } from '../../core/supabase.service';
 import { AuthService } from '../../core/auth.service';
@@ -20,6 +19,11 @@ export interface CompositionItem {
   total: number;
 }
 
+export interface DashboardSelection {
+  type?: AccountType | null;
+  accountId?: string | null;
+}
+
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
   private supabase = inject(SupabaseService).client;
@@ -29,23 +33,28 @@ export class DashboardService {
   buildSummaries(
     snapshots: MonthlySnapshot[],
     income: IncomeTransaction[],
-    months: { year: number; month: number }[]
+    months: { year: number; month: number }[],
+    selection: DashboardSelection = {}
   ): MonthSummary[] {
+    const filteredSnapshots = this.filterSnapshots(snapshots, selection);
+
     return months.map((m, i) => {
-      const monthSnaps = snapshots.filter(s => s.year === m.year && s.month === m.month);
+      const monthSnaps = filteredSnapshots.filter(s => s.year === m.year && s.month === m.month);
       const total = monthSnaps.reduce((sum, s) => sum + Number(s.value), 0);
 
       let delta: number | null = null;
       if (i > 0) {
         const prev = months[i - 1];
-        const prevSnaps = snapshots.filter(s => s.year === prev.year && s.month === prev.month);
+        const prevSnaps = filteredSnapshots.filter(s => s.year === prev.year && s.month === prev.month);
         const prevTotal = prevSnaps.reduce((sum, s) => sum + Number(s.value), 0);
         delta = total - prevTotal;
       }
 
-      const monthIncome = income
-        .filter(t => t.year === m.year && t.month === m.month)
-        .reduce((sum, t) => sum + Number(t.amount), 0);
+      const monthIncome = selection.type || selection.accountId
+        ? 0
+        : income
+            .filter(t => t.year === m.year && t.month === m.month)
+            .reduce((sum, t) => sum + Number(t.amount), 0);
 
       const savingPct =
         delta !== null && monthIncome > 0 ? (delta / monthIncome) * 100 : null;
@@ -91,12 +100,12 @@ export class DashboardService {
     };
   }
 
-  /** Computes summaries and composition for the 10-month window ending at `windowEnd`.
-   *  One extra context month is prepended so the first displayed month has a delta. */
+  /** Computes summaries and composition for the 10-month window ending at `windowEnd`. */
   computeWindow(
     snapshots: any[],
     income: IncomeTransaction[],
-    windowEnd: { year: number; month: number }
+    windowEnd: { year: number; month: number },
+    selection: DashboardSelection = {}
   ): { summaries: MonthSummary[]; composition: CompositionItem[] } {
     const displayMonths = this.getMonthsWindow(windowEnd);
 
@@ -107,23 +116,39 @@ export class DashboardService {
     const allSummaries = this.buildSummaries(
       snapshots as MonthlySnapshot[],
       income,
-      [contextMonth, ...displayMonths]
+      [contextMonth, ...displayMonths],
+      selection
     );
     const summaries = allSummaries.slice(1); // drop context prefix
 
+    const filteredSnapshots = this.filterSnapshots(snapshots as MonthlySnapshot[], selection);
     const lastWithData = [...summaries].reverse().find(s => s.total > 0);
     const composition = this.buildComposition(
-      snapshots,
+      filteredSnapshots,
       lastWithData ?? summaries[summaries.length - 1]
     );
 
     return { summaries, composition };
   }
 
+  private filterSnapshots(
+    snapshots: (MonthlySnapshot & { accounts?: { type: AccountType } })[],
+    selection: DashboardSelection
+  ): (MonthlySnapshot & { accounts?: { type: AccountType } })[] {
+    return snapshots.filter(s => {
+      const snapshotType = (s as any).accounts?.type ?? 'asset';
+      if (selection.type && snapshotType !== selection.type) return false;
+      if (selection.accountId && s.account_id !== selection.accountId) return false;
+      return true;
+    });
+  }
+
   private buildComposition(
     snapshots: (MonthlySnapshot & { accounts?: { type: AccountType } })[],
     month: MonthSummary
   ): CompositionItem[] {
+    if (!month) return [];
+
     const monthSnaps = snapshots.filter(s => s.year === month.year && s.month === month.month);
     const byType: Partial<Record<AccountType, number>> = {};
     for (const s of monthSnaps) {
