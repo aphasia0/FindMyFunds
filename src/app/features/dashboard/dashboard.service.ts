@@ -12,6 +12,8 @@ export interface MonthSummary {
   delta: number | null;
   income: number;
   savingPct: number | null;
+  /** False when the month has no snapshot at all (not yet entered). */
+  hasData: boolean;
 }
 
 export interface CompositionItem {
@@ -38,17 +40,18 @@ export class DashboardService {
   ): MonthSummary[] {
     const filteredSnapshots = this.filterSnapshots(snapshots, selection);
 
-    return months.map((m, i) => {
+    let prevTotal: number | null = null;
+    let prevMonthHadData = false;
+
+    return months.map(m => {
       const monthSnaps = filteredSnapshots.filter(s => s.year === m.year && s.month === m.month);
+      const hasData = monthSnaps.length > 0;
       const total = monthSnaps.reduce((sum, s) => sum + Number(s.value), 0);
 
-      let delta: number | null = null;
-      if (i > 0) {
-        const prev = months[i - 1];
-        const prevSnaps = filteredSnapshots.filter(s => s.year === prev.year && s.month === prev.month);
-        const prevTotal = prevSnaps.reduce((sum, s) => sum + Number(s.value), 0);
-        delta = total - prevTotal;
-      }
+      // Compare against the last month that actually has data, so an
+      // un-entered month never produces a fake collapse to zero.
+      const delta = hasData && prevTotal !== null ? total - prevTotal : null;
+      if (hasData) prevTotal = total;
 
       const monthIncome = selection.type || selection.accountId
         ? 0
@@ -56,10 +59,16 @@ export class DashboardService {
             .filter(t => t.year === m.year && t.month === m.month)
             .reduce((sum, t) => sum + Number(t.amount), 0);
 
+      // Saving rate makes sense only for a one-month delta, otherwise the
+      // variation spans multiple months while income is for one month.
       const savingPct =
-        delta !== null && monthIncome > 0 ? (delta / monthIncome) * 100 : null;
+        delta !== null && prevMonthHadData && monthIncome > 0
+          ? (delta / monthIncome) * 100
+          : null;
 
-      return { year: m.year, month: m.month, total, delta, income: monthIncome, savingPct };
+      prevMonthHadData = hasData;
+
+      return { year: m.year, month: m.month, total, delta, income: monthIncome, savingPct, hasData };
     });
   }
 
@@ -69,6 +78,21 @@ export class DashboardService {
       const d = new Date(end.year, end.month - 1 - 9 + i, 1);
       return { year: d.getFullYear(), month: d.getMonth() + 1 };
     });
+  }
+
+  /** Latest month that has at least one snapshot for the given selection. */
+  getLatestDataMonth(
+    snapshots: MonthlySnapshot[],
+    selection: DashboardSelection = {}
+  ): { year: number; month: number } | null {
+    const filtered = this.filterSnapshots(snapshots, selection);
+    let latest: { year: number; month: number } | null = null;
+    for (const s of filtered) {
+      if (!latest || s.year > latest.year || (s.year === latest.year && s.month > latest.month)) {
+        latest = { year: s.year, month: s.month };
+      }
+    }
+    return latest;
   }
 
   /** Fetches all snapshots and income for this user (no date filter — data is small). */
@@ -130,7 +154,7 @@ export class DashboardService {
     const summaries = allSummaries.slice(1); // drop context prefix
 
     const filteredSnapshots = this.filterSnapshots(snapshots as MonthlySnapshot[], selection);
-    const lastWithData = [...summaries].reverse().find(s => s.total > 0);
+    const lastWithData = [...summaries].reverse().find(s => s.hasData);
     const composition = this.buildComposition(
       filteredSnapshots,
       lastWithData ?? summaries[summaries.length - 1]

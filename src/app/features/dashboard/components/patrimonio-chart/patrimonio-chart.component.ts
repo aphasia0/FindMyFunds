@@ -112,13 +112,13 @@ export class PatrimonioChartComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    const lastIdx = this.summaries.length - 1;
+    const lastIdx = this.summaries.reduce((last, s, i) => s.hasData ? i : last, -1);
     this.chartData = {
       labels: this.summaries.map(s => `${MONTHS[s.month - 1]} ${String(s.year).slice(2)}`),
       datasets: [{
         type: 'bar' as const,
         label: 'Patrimonio',
-        data: this.summaries.map(s => s.total),
+        data: this.summaries.map(s => s.hasData ? s.total : null),
         backgroundColor: this.summaries.map((_, i) =>
           i === lastIdx ? PATRIMONIO_LAST : PATRIMONIO_COLOR
         ),

@@ -154,6 +154,12 @@ export class DashboardComponent implements OnInit {
       this.allSnapshots = snapshots;
       this.allIncome = income;
       this.allAccounts = accounts;
+
+      // Show the snapshot "as of" the latest month with data instead of an
+      // empty current month (which would render as zero in the charts).
+      const latest = this.dashboardService.getLatestDataMonth(snapshots);
+      if (latest) this.windowEnd = latest;
+
       this.recompute();
     } catch (e) {
       console.error('Dashboard load error', e);
@@ -208,7 +214,10 @@ export class DashboardComponent implements OnInit {
     );
     this.summaries = summaries;
     this.composition = composition;
-    this.currentSummary = summaries[summaries.length - 1] ?? null;
-    this.showNoCta = this.currentSummary?.total === 0;
+
+    // The summary card always shows the latest month with data ("as of"),
+    // never an un-entered month with a zero total.
+    this.currentSummary = [...summaries].reverse().find(s => s.hasData) ?? null;
+    this.showNoCta = summaries.length > 0 && !summaries[summaries.length - 1].hasData;
   }
 }
