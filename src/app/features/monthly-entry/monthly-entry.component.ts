@@ -96,15 +96,23 @@ interface AccountRow {
   `,
   styles: [`
     .entry-header { display: flex; align-items: flex-end; gap: 1.5rem; flex-wrap: wrap; }
-    .snapshot-date { display: flex; gap: 0.5rem; align-items: center; }
-    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+    .snapshot-date { display: flex; gap: 0.5rem; align-items: center; color: var(--muted); font-size: 0.875rem; }
+    .snapshot-date strong { color: var(--ink); font-weight: 600; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.75rem; }
     .section-header .section-title { margin-bottom: 0; }
-    .section-title { font-size: 0.875rem; font-weight: 600; color: #374151; margin-bottom: 1rem; }
-    .account-entry-row { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid #f0fdf4; flex-wrap: wrap; gap: 0.5rem; }
-    .account-entry-label { display: flex; flex-direction: column; }
+    .section-title { font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 1rem; }
+    .account-entry-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0.65rem 0; border-bottom: 1px solid var(--hairline-soft);
+      flex-wrap: wrap; gap: 0.5rem;
+    }
+    .account-entry-row:last-child { border-bottom: 0; }
+    .account-entry-label { display: flex; flex-direction: column; gap: 0.1rem; }
+    .account-entry-label span:first-child { font-weight: 500; color: var(--ink); }
     :host ::ng-deep .amount-input { width: 160px; }
-    .income-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
-    .flex-1 { flex: 1; min-width: 120px; }
+    :host ::ng-deep .amount-input .p-inputtext { height: 44px; }
+    .income-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.65rem; flex-wrap: wrap; }
+    .flex-1 { flex: 1; min-width: 140px; }
   `],
 })
 export class MonthlyEntryComponent implements OnInit {

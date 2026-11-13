@@ -11,9 +11,9 @@ import { DemoModeService } from '../../../core/demo-mode.service';
   imports: [RouterOutlet, NavComponent],
   template: `
     <div class="shell">
-      <div class="nav-sidebar">
-        <app-nav mode="sidebar" />
-      </div>
+      <header class="nav-top">
+        <app-nav mode="top" />
+      </header>
       <main class="shell-content">
         <router-outlet />
       </main>

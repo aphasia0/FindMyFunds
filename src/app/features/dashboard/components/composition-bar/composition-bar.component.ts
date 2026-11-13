@@ -5,7 +5,7 @@ import { AccountType } from '../../../../core/models';
 import { CompositionItem } from '../../dashboard.service';
 
 const TYPE_COLORS: Record<string, string> = {
-  cash: '#22c55e', bond: '#3b82f6', etf: '#f59e0b', stock: '#8b5cf6', asset: '#f97316',
+  cash: '#222222', bond: '#6a6a6a', etf: '#929292', stock: '#c1c1c1', asset: '#ff385c',
 };
 
 @Component({
@@ -40,17 +40,22 @@ const TYPE_COLORS: Record<string, string> = {
   `,
   styles: [`
     .composition-card { margin-bottom: 1.25rem; }
-    .comp-title { font-size: 0.8rem; font-weight: 600; color: #6b7280; margin-bottom: 0.75rem; }
-    .comp-bar { display: flex; height: 24px; border-radius: 12px; overflow: hidden; gap: 2px; }
-    .comp-segment { transition: width 0.4s ease; border: 0; cursor: pointer; padding: 0; }
-    .comp-segment.selected { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.9); }
-    .comp-legend { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.75rem; font-size: 0.85rem; }
+    .comp-title { font-size: 0.8125rem; font-weight: 500; color: var(--muted); margin-bottom: 0.75rem; }
+    .comp-bar { display: flex; height: 24px; border-radius: var(--radius-full); overflow: hidden; gap: 2px; background: var(--surface-soft); }
+    .comp-segment { transition: width 0.4s ease, opacity 0.15s ease; border: 0; cursor: pointer; padding: 0; }
+    .comp-segment:hover { opacity: 0.85; }
+    .comp-segment.selected { box-shadow: inset 0 0 0 2px var(--canvas); }
+    .comp-legend { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.85rem; font-size: 0.8125rem; }
     .legend-item {
-      display: inline-flex; align-items: center; gap: 0.35rem; border: 1px solid #e5e7eb; background: transparent;
-      border-radius: 999px; padding: 0.3rem 0.55rem; cursor: pointer; color: inherit;
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      border: 1px solid var(--hairline); background: var(--canvas);
+      border-radius: var(--radius-full); padding: 0.3rem 0.65rem;
+      cursor: pointer; color: var(--ink); font-size: 0.8125rem;
+      transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
     }
-    .legend-item.selected { background: #eef2ff; border-color: #c7d2fe; }
-    .legend-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .legend-item:hover { background: var(--surface-soft); border-color: var(--border-strong); }
+    .legend-item.selected { background: var(--ink); border-color: var(--ink); color: #ffffff; }
+    .legend-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
   `],
 })
 export class CompositionBarComponent {

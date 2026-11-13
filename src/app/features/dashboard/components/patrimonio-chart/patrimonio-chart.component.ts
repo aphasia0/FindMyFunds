@@ -8,8 +8,11 @@ Chart.register(zoomPlugin);
 
 const MONTHS = ['Gen','Feb','Mar','Apr','Mag','Giu','Lug','Ago','Set','Ott','Nov','Dic'];
 const IS_TOUCH = typeof window !== 'undefined' && navigator.maxTouchPoints > 0;
-const PATRIMONIO_COLOR = '#818cf8';
-const PATRIMONIO_LAST  = '#4f46e5';
+const PATRIMONIO_COLOR = '#dddddd';
+const PATRIMONIO_LAST  = '#ff385c';
+
+Chart.defaults.font.family = "'Inter', Circular, -apple-system, system-ui, Roboto, 'Helvetica Neue', sans-serif";
+Chart.defaults.color = '#6a6a6a';
 
 @Component({
   selector: 'app-patrimonio-chart',
@@ -41,9 +44,9 @@ const PATRIMONIO_LAST  = '#4f46e5';
     </div>
   `,
   styles: [`
-    .chart-wrap { margin-bottom: 1.25rem; position: relative; }
+    .chart-wrap { margin-bottom: 1.25rem; position: relative; padding: 1.25rem; }
     .chart-wrap:fullscreen, .chart-wrap:-webkit-full-screen {
-      background: white; display: flex; flex-direction: column; padding: 1.5rem; margin: 0;
+      background: var(--canvas); display: flex; flex-direction: column; padding: 1.5rem; margin: 0;
     }
     .chart-wrap:fullscreen canvas, .chart-wrap:-webkit-full-screen canvas {
       max-height: none !important; flex: 1;
@@ -53,10 +56,12 @@ const PATRIMONIO_LAST  = '#4f46e5';
     .chart-toolbar { display: flex; justify-content: flex-end; margin-bottom: 0.4rem; }
     .fs-btn {
       display: flex; align-items: center; justify-content: center;
-      width: 2rem; height: 2rem; border-radius: 6px;
-      border: 1px solid #e0e7ff; background: #eef2ff; color: #4f46e5; cursor: pointer;
+      width: 2rem; height: 2rem; border-radius: var(--radius-full);
+      border: 1px solid var(--hairline); background: var(--canvas);
+      color: var(--ink); cursor: pointer;
+      transition: background-color 0.15s ease;
     }
-    .fs-btn:hover { background: #c7d2fe; }
+    .fs-btn:hover { background: var(--surface-soft); }
   `],
 })
 export class PatrimonioChartComponent implements OnChanges {
@@ -74,6 +79,14 @@ export class PatrimonioChartComponent implements OnChanges {
     plugins: {
       legend: { display: false },
       tooltip: {
+        backgroundColor: '#222222',
+        titleColor: '#ffffff',
+        bodyColor: '#ffffff',
+        borderColor: '#222222',
+        borderWidth: 0,
+        cornerRadius: 8,
+        padding: 12,
+        displayColors: false,
         callbacks: {
           label: (ctx: any) => `  Patrimonio: € ${Number(ctx.raw).toLocaleString('it-IT')}`,
         },
@@ -84,15 +97,16 @@ export class PatrimonioChartComponent implements OnChanges {
       },
     } as any,
     scales: {
-      x: { grid: { display: false }, ticks: { maxRotation: 45 } },
+      x: { grid: { display: false }, ticks: { maxRotation: 45, color: '#6a6a6a' } },
       y: {
         position: 'left',
-        title: { display: true, text: 'Patrimonio (€)', color: '#4f46e5' },
+        title: { display: true, text: 'Patrimonio (€)', color: '#6a6a6a' },
         ticks: {
-          color: '#4f46e5',
+          color: '#6a6a6a',
           callback: v => `€ ${(Number(v) / 1000).toFixed(0)}k`,
         },
-        grid: { color: '#eef2ff' },
+        grid: { color: '#ebebeb' },
+        border: { display: false },
       },
     },
   };

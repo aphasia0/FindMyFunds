@@ -106,29 +106,41 @@ import { DemoModeService } from '../../core/demo-mode.service';
     .add-row { margin-bottom: 1rem; }
     .demo-notice {
       display: flex; align-items: center; gap: 0.6rem;
-      background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 0.75rem;
-      padding: 0.75rem 1rem; margin-bottom: 1rem;
-      color: #4338ca; font-size: 0.875rem;
+      background: var(--surface-soft); border: 1px solid var(--hairline);
+      border-radius: var(--radius-md); padding: 0.85rem 1rem; margin-bottom: 1rem;
+      color: var(--body); font-size: 0.875rem;
     }
-    .account-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem; }
+    .account-row {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 0.75rem; padding: 1rem 1.25rem;
+      flex-wrap: wrap; gap: 0.75rem;
+      transition: box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+    .account-row:hover { border-color: transparent; box-shadow: var(--shadow-card); }
     .account-info { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-    .account-name { font-weight: 500; }
+    .account-name { font-weight: 600; font-size: 0.9375rem; color: var(--ink); }
     .account-actions { display: flex; gap: 0.5rem; }
-    .account-balance { font-weight: 600; font-size: 0.95rem; color: #1a2e1a; white-space: nowrap; margin-left: auto; padding-right: 1rem; }
-    .account-balance.negative { color: #dc2626; }
-    .archived { opacity: 0.6; }
+    .account-balance {
+      font-weight: 600; font-size: 1rem; color: var(--ink);
+      white-space: nowrap; margin-left: auto; padding-right: 0.5rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .account-balance.negative { color: var(--negative); }
+    .archived { opacity: 0.55; }
     .type-badge {
       font-size: 0.75rem; font-weight: 600;
       padding: 0.2rem 0.6rem;
-      border-radius: 999px;
+      border-radius: var(--radius-full);
+      background: var(--surface-soft); color: var(--muted);
+      border: 1px solid var(--hairline-soft);
       white-space: nowrap;
     }
-    .type-cash  { background: #dcfce7; color: #15803d; }
-    .type-bond  { background: #dbeafe; color: #1d4ed8; }
-    .type-etf   { background: #fef3c7; color: #92400e; }
-    .type-stock { background: #ede9fe; color: #5b21b6; }
-    .type-asset { background: #ffedd5; color: #9a3412; }
-    .dialog-msg { margin: 0; color: #374151; line-height: 1.5; }
+    .type-cash,
+    .type-bond,
+    .type-etf,
+    .type-stock,
+    .type-asset { background: var(--surface-soft); color: var(--muted); }
+    .dialog-msg { margin: 0; color: var(--body); line-height: 1.55; }
   `],
 })
 export class AccountsComponent implements OnInit {

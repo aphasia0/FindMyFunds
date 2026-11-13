@@ -52,42 +52,46 @@ import { AuthService } from '../../../core/auth.service';
   `,
   styles: [`
     .auth-page {
-      min-height: 100vh;
+      min-height: 100dvh;
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      background: #eef2ff;
+      background: var(--canvas);
       padding: 1rem;
       padding-top: clamp(3rem, 10vh, 6rem);
     }
-    :host ::ng-deep .p-card { width: 100%; max-width: 400px; }
-    :host ::ng-deep .p-inputtext { border-color: #c7d2fe !important; }
-    :host ::ng-deep .p-inputtext:focus { border-color: #6366f1 !important; }
+    :host ::ng-deep .p-card { width: 100%; max-width: 420px; }
+    :host ::ng-deep .p-card .p-card-body { padding: 2rem; }
+    :host ::ng-deep .p-inputtext { width: 100%; }
     .auth-logo {
       display: flex; align-items: center; justify-content: center;
-      gap: 0.6rem; margin-bottom: 0.35rem;
+      gap: 0.55rem; margin-bottom: 0.35rem;
     }
     .logo-mark {
-      width: 34px; height: 34px; background: #6366f1; border-radius: 9px;
-      color: #fff; font-weight: 800; font-size: 1rem;
+      width: 34px; height: 34px; background: var(--primary); border-radius: var(--radius-full);
+      color: var(--on-primary); font-weight: 700; font-size: 1rem;
       display: flex; align-items: center; justify-content: center;
     }
-    .logo-text { font-size: 1.4rem; font-weight: 700; color: #4338ca; }
+    .logo-text { font-size: 1.5rem; font-weight: 700; color: var(--primary); letter-spacing: -0.02em; }
     .auth-tagline {
-      text-align: center; color: #6b7280; font-size: 0.85rem;
-      margin: 0 0 1.25rem;
+      text-align: center; color: var(--muted); font-size: 0.875rem;
+      margin: 0 0 1.5rem;
     }
-    h2 { text-align: center; color: #3730a3; margin-bottom: 1.5rem; }
+    h2 {
+      text-align: center; color: var(--ink);
+      font-size: 1.375rem; font-weight: 600;
+      margin: 0 0 1.5rem; letter-spacing: -0.01em;
+    }
     .auth-form { display: flex; flex-direction: column; gap: 1rem; }
-    .field { display: flex; flex-direction: column; gap: 0.25rem; }
-    .auth-link { text-align: center; margin-top: 1rem; }
-    a { color: #4f46e5; }
+    .field { display: flex; flex-direction: column; gap: 0.35rem; }
+    .auth-link { text-align: center; margin-top: 1.25rem; font-size: 0.875rem; color: var(--body); }
+    a { color: var(--primary); font-weight: 500; }
     .demo-divider {
       display: flex; align-items: center; gap: 0.75rem;
-      margin: 1rem 0 0.75rem; color: #9ca3af; font-size: 0.85rem;
+      margin: 1.25rem 0 0.85rem; color: var(--muted); font-size: 0.8125rem;
     }
     .demo-divider::before, .demo-divider::after {
-      content: ''; flex: 1; height: 1px; background: #e0e7ff;
+      content: ''; flex: 1; height: 1px; background: var(--hairline-soft);
     }
   `],
 })

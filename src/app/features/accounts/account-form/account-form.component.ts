@@ -48,9 +48,9 @@ import { Account, AccountFormData, AccountType } from '../../../core/models';
     </p-dialog>
   `,
   styles: [`
-    .form { display: flex; flex-direction: column; gap: 1rem; }
-    .field { display: flex; flex-direction: column; gap: 0.25rem; }
-    .form-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.5rem; }
+    .form { display: flex; flex-direction: column; gap: 1.25rem; }
+    .field { display: flex; flex-direction: column; gap: 0.35rem; }
+    .form-actions { display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 0.75rem; }
   `],
 })
 export class AccountFormComponent implements OnChanges {

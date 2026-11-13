@@ -51,36 +51,37 @@ import { MonthSummary } from '../../dashboard.service';
     }
   `,
   styles: [`
-    .summary-card { margin-bottom: 1.25rem; box-shadow: var(--shadow-raised); }
-    .metric-label { margin: 0; font-size: 0.8rem; font-weight: 500; color: #6b7280; }
+    .summary-card { margin-bottom: 1.25rem; padding: 1.75rem; }
+    .metric-label { margin: 0; font-size: 0.8125rem; font-weight: 500; color: var(--muted); }
     .hero-value {
-      margin: 0.25rem 0 0;
-      font-size: 2.25rem;
-      font-weight: 800;
-      color: #1a2e1a;
-      letter-spacing: -0.02em;
-      line-height: 1;
+      margin: 0.35rem 0 0;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.03em;
+      line-height: 1.05;
       animation: reveal 0.5s ease-out;
     }
     @keyframes reveal {
       from { opacity: 0; transform: translateY(6px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .divider { height: 1px; background: #eef2ff; margin: 1rem 0; }
+    .divider { height: 1px; background: var(--hairline-soft); margin: 1.25rem 0; }
     .metrics-row { display: flex; gap: 2rem; flex-wrap: wrap; }
     .metric { display: flex; flex-direction: column; gap: 0.4rem; }
     .pill {
       display: inline-flex;
       align-items: center;
-      font-size: 0.95rem;
+      font-size: 0.875rem;
       font-weight: 600;
-      padding: 0.3rem 0.75rem;
-      border-radius: 999px;
+      padding: 0.3rem 0.8rem;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
     }
-    .pill-positive { background: #dcfce7; color: #15803d; }
-    .pill-negative { background: #fee2e2; color: #b91c1c; }
-    .pill-neutral  { background: #f3f4f6; color: #6b7280; }
-    .pill-income   { background: #dbeafe; color: #1d4ed8; }
+    .pill-positive { background: var(--positive-soft); color: var(--positive); }
+    .pill-negative { background: var(--negative-soft); color: var(--negative); }
+    .pill-neutral  { background: var(--surface-soft); color: var(--muted); }
+    .pill-income   { background: var(--surface-soft); color: var(--ink); }
   `],
 })
 export class SummaryCardComponent {

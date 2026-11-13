@@ -27,7 +27,7 @@ const TYPE_OPTIONS: AccountType[] = ['cash', 'bond', 'etf', 'stock', 'asset'];
       <p-button icon="pi pi-chevron-right" [text]="true" (onClick)="shiftWindow(1)"
                 [disabled]="isAtOrPastToday" />
       @if (!isAtOrPastToday) {
-        <p-button size="small" severity="secondary"
+        <p-button size="small" severity="secondary" styleClass="today-btn"
                   [label]="'dashboard.today' | translate" (onClick)="goToToday()" />
       }
     </div>
@@ -81,25 +81,39 @@ const TYPE_OPTIONS: AccountType[] = ['cash', 'bond', 'etf', 'stock', 'asset'];
     }
   `,
   styles: [`
-    .cta-banner { display: flex; align-items: center; justify-content: space-between;
-                  flex-wrap: wrap; gap: 0.75rem; background: #e0e7ff; border: 1px solid #a5b4fc; }
-    .window-nav { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; padding: 0.5rem 0.75rem; }
-    .window-label { font-weight: 500; flex: 1; text-align: center; }
-    .selection-toolbar { margin-bottom: 1.25rem; padding: 1rem; }
+    .cta-banner {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 0.75rem; background: var(--surface-soft);
+      border: 1px solid var(--hairline);
+    }
+    .window-nav {
+      display: flex; align-items: center; gap: 0.5rem;
+      margin-bottom: 1.25rem; padding: 0.4rem 0.6rem;
+      background: var(--surface-soft);
+      border: 1px solid var(--hairline-soft);
+      border-radius: var(--radius-full);
+    }
+    .window-label {
+      font-weight: 600; flex: 1; text-align: center;
+      font-size: 0.9375rem; color: var(--ink);
+    }
+    .selection-toolbar {
+      margin-bottom: 1.25rem; padding: 1rem 1.25rem;
+      border-radius: var(--radius-md);
+    }
     .selection-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
     .selection-summary {
-      margin-top: 0.75rem; font-size: 0.8rem; color: #4b5563; font-weight: 600;
+      margin-top: 0.75rem; font-size: 0.8125rem; color: var(--muted); font-weight: 500;
     }
     .filter-chip {
-      appearance: none; border: 1px solid #dbeafe; background: #f8fafc; color: #1f2937;
-      border-radius: 999px; padding: 0.45rem 0.8rem; font-size: 0.8rem; cursor: pointer;
-      transition: all 0.2s ease;
+      appearance: none; border: 1px solid var(--hairline); background: var(--canvas);
+      color: var(--ink); border-radius: var(--radius-full);
+      padding: 0.45rem 0.85rem; font-size: 0.875rem; font-weight: 500;
+      cursor: pointer; transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
     }
-    .filter-chip:hover {
-      background: #eef2ff; border-color: #c7d2fe;
-    }
+    .filter-chip:hover { background: var(--surface-soft); border-color: var(--border-strong); }
     .filter-chip.active {
-      background: #4f46e5; color: white; border-color: #4f46e5; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+      background: var(--ink); color: #ffffff; border-color: var(--ink);
     }
     .account-row { margin-top: 0.75rem; }
   `],

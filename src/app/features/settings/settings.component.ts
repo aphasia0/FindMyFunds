@@ -20,12 +20,10 @@ import { DemoModeService } from '../../core/demo-mode.service';
 
     @if (demoMode.isDemo) {
       <div class="fmf-card demo-notice">
-        <i class="pi pi-info-circle" style="font-size:1.5rem; color:#16a34a;"></i>
+        <i class="pi pi-info-circle demo-icon"></i>
         <div>
-          <p style="margin:0; font-weight:600; color:#166534;">Sei in modalità demo</p>
-          <p style="margin:0.25rem 0 0; color:#374151; font-size:0.9rem;">
-            Le impostazioni non sono disponibili nella demo.
-          </p>
+          <p class="demo-title">Sei in modalità demo</p>
+          <p class="demo-text">Le impostazioni non sono disponibili nella demo.</p>
         </div>
         <p-button label="Registrati gratis →" severity="secondary"
                   size="small" routerLink="/auth/register" />
@@ -57,7 +55,7 @@ import { DemoModeService } from '../../core/demo-mode.service';
       <p-button [label]="saving ? ('settings.saving' | translate) : ('settings.save' | translate)"
                 [loading]="saving" (onClick)="onSave()" styleClass="w-full mt-2" />
 
-      <hr style="border-color: #d1fae5; margin: 1.5rem 0;" />
+      <hr style="border: 0; border-top: 1px solid var(--hairline-soft); margin: 1.75rem 0;" />
 
       <p-button [label]="'settings.logout' | translate"
                 icon="pi pi-sign-out" severity="secondary"
@@ -67,11 +65,15 @@ import { DemoModeService } from '../../core/demo-mode.service';
   `,
   styles: [`
     .settings-form { display: flex; flex-direction: column; gap: 1.25rem; max-width: 480px; }
-    .field { display: flex; flex-direction: column; gap: 0.25rem; }
+    .field { display: flex; flex-direction: column; gap: 0.35rem; }
     .demo-notice {
       display: flex; align-items: center; gap: 1rem;
-      flex-wrap: wrap; background: #f0fdf4; border: 1px solid #86efac;
+      flex-wrap: wrap; background: var(--surface-soft);
+      border: 1px solid var(--hairline);
     }
+    .demo-icon { font-size: 1.4rem; color: var(--muted); }
+    .demo-title { margin: 0; font-weight: 600; color: var(--ink); }
+    .demo-text { margin: 0.25rem 0 0; color: var(--muted); font-size: 0.875rem; }
   `],
 })
 export class SettingsComponent implements OnInit {

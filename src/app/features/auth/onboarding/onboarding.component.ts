@@ -32,12 +32,23 @@ import { ProfileService } from '../../../core/profile.service';
     </div>
   `,
   styles: [`
-    .auth-page { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #f0fdf4; padding: 1rem; }
-    :host ::ng-deep .p-card { width: 100%; max-width: 420px; }
-    .auth-logo { font-size: 1.5rem; font-weight: 700; color: #15803d; text-align: center; margin-bottom: 0.5rem; }
-    h2 { text-align: center; color: #166534; margin-bottom: 0.5rem; }
-    .subtitle { text-align: center; color: #4b7a4b; margin-bottom: 1.5rem; }
-    .field { display: flex; flex-direction: column; gap: 0.25rem; }
+    .auth-page {
+      min-height: 100dvh; display: flex; align-items: center;
+      justify-content: center; background: var(--canvas); padding: 1rem;
+    }
+    :host ::ng-deep .p-card { width: 100%; max-width: 440px; }
+    :host ::ng-deep .p-card .p-card-body { padding: 2rem; }
+    .auth-logo {
+      font-size: 1.5rem; font-weight: 700; color: var(--primary);
+      text-align: center; margin-bottom: 0.5rem; letter-spacing: -0.02em;
+    }
+    h2 {
+      text-align: center; color: var(--ink);
+      font-size: 1.375rem; font-weight: 600;
+      margin: 0 0 0.5rem; letter-spacing: -0.01em;
+    }
+    .subtitle { text-align: center; color: var(--muted); font-size: 0.875rem; margin-bottom: 1.5rem; }
+    .field { display: flex; flex-direction: column; gap: 0.35rem; }
   `],
 })
 export class OnboardingComponent {
